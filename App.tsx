@@ -27,7 +27,7 @@ import {
 import Login from './Screen/Login';
 import Home from './Screen/Home';
 import Navigation from './Screen/navigation';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -67,13 +67,9 @@ function App(): JSX.Element {
   };
 
   return (
-    
-       
-      
-        <Navigation/>
-       
-      
-   
+    <SafeAreaView style={{flex: 1}}>
+      <Navigation />
+    </SafeAreaView>
   );
 }
 

@@ -39,7 +39,7 @@ const Login = (props) => {
         if (!!result?.data?.accessToken) {
           try {           
             await AsyncStorage.setItem('accessToken', result.data.accessToken);
-            props.navigation.navigate("Home");
+            props.navigation.navigate("BottomTab");
           } catch (e) {
             console.log(e);
           }

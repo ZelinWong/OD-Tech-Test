@@ -75,7 +75,7 @@ const Home = () => {
       <ScrollView>
         <View style={styles.Header}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.HeaderText}>Good Morning</Text>
+            <Text style={styles.HeaderText}>Good Morning !</Text>
 
             <View>
               <TouchableOpacity style={styles.HeaderText}>
@@ -94,7 +94,7 @@ const Home = () => {
           <View style={styles.SecondHeader}>
             <View style={{flexDirection: 'column'}}>
               <Text style={{color: 'white'}}>Balance</Text>
-              <Text style={styles.WalletAmount}>RM{data.credit.amount}</Text>
+              <Text style={styles.WalletAmount}>RM {data.credit.amount}</Text>
             </View>
 
             <TouchableOpacity style={styles.ReloadBtn}>
@@ -103,15 +103,17 @@ const Home = () => {
           </View>
 
           <View style={styles.ThirdHeader}>
-            
-            <TouchableOpacity style={{marginLeft: 5, marginRight: 5, flexDirection: 'row'}}>
-            <Image
-              style={styles.tinyLogo}
-              source={require('C:/Users/User/AwesomeProject/Assets/Star.png')}></Image>
+            <TouchableOpacity
+              style={{marginLeft: 5, marginRight: 5, flexDirection: 'row'}}>
+              <Image
+                style={styles.tinyLogo}
+                source={require('C:/Users/User/AwesomeProject/Assets/Star.png')}></Image>
               <Text style={{color: 'white'}}>Gold</Text>
             </TouchableOpacity>
 
-            <Text style={{color: 'white', marginLeft: 5, marginRight: 5}}>|</Text>
+            <Text style={{color: 'white', marginLeft: 5, marginRight: 5}}>
+              |
+            </Text>
 
             <TouchableOpacity style={{marginLeft: 5, marginRight: 5}}>
               <Text style={{color: 'white'}}>See rewards </Text>
@@ -120,19 +122,19 @@ const Home = () => {
         </View>
 
         <View>
-          <View >
+          <View style={{alignItems: 'center'}}>
             <TouchableOpacity style={{flexDirection: 'row'}}>
-              
               <View style={styles.MissionHeader}>
-              <Image
-                style={styles.MidLogo}
-                source={require('C:/Users/User/AwesomeProject/Assets/Mountain.png')}>
-                </Image>
-                <Text style={styles.MissionText1}>2 missions completed</Text>
+                <Image
+                  style={styles.MidLogo}
+                  source={require('C:/Users/User/AwesomeProject/Assets/Mountain.png')}></Image>
+                <View style={{flexDirection: 'column', marginLeft: 15}}>
+                  <Text style={styles.MissionText1}>2 missions completed</Text>
 
-                <Text style={styles.MissionText2}>
-                  Complete more to get rewarded
-                </Text>
+                  <Text style={styles.MissionText2}>
+                    Complete more to get rewarded
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
           </View>
@@ -141,13 +143,18 @@ const Home = () => {
         <View style={{flexDirection: 'column'}}>
           <View style={styles.Panel}>
             <View style={styles.PanelHeader}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: 18,
-                }}>
-                Internet
-              </Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Image
+                  style={styles.WifiLogo}
+                  source={require('C:/Users/User/AwesomeProject/Assets/Globe.png')}></Image>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                  }}>
+                  Internet
+                </Text>
+              </View>
               <TouchableOpacity style={styles.BuyMoreBtn}>
                 <View>
                   <Text style={styles.PanelText}>BUY MORE</Text>
@@ -159,39 +166,43 @@ const Home = () => {
                 <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-around',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                   }}>
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      fontSize: 18,
+                      fontSize: 16,
+                      marginLeft: 10
                     }}>
                     {data.balances[0].name}
                   </Text>
 
-                  <Text>{data.balances[0].description}</Text>
+                  <Text style={{fontSize: 12, marginRight: 10}}>{data.balances[0].description}</Text>
                 </View>
-                <Text style={{marginLeft: 23}}>{DataRemainDays} days left</Text>
+                <Text style={{marginLeft: 10}}>{DataRemainDays} days left</Text>
               </View>
 
               <View style={styles.PanelComponenet}>
                 <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-around',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                   }}>
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      fontSize: 18,
+                      fontSize: 16,
+                      marginLeft: 10
                     }}>
                     {data.balances[1].name}
                   </Text>
 
-                  <Text>{data.balances[1].description}</Text>
+                  <Text style={{fontSize: 12, marginRight: 10}}>{data.balances[1].description}</Text>
                 </View>
 
-                <Text style={{marginLeft: 23, color: 'red'}}>
+                <Text style={{marginLeft: 10, color: 'red'}}>
                   {data.balances[1].remainingAmount} MB Left
                 </Text>
               </View>
@@ -202,13 +213,18 @@ const Home = () => {
         <View style={{flexDirection: 'column'}}>
           <View style={styles.Panel}>
             <View style={styles.PanelHeader}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: 18,
-                }}>
-                Voice
-              </Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Image
+                  style={styles.WifiLogo}
+                  source={require('C:/Users/User/AwesomeProject/Assets/Globe.png')}></Image>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                  }}>
+                  Voice
+                </Text>
+              </View>
               <TouchableOpacity style={styles.BuyMoreBtn}>
                 <View>
                   <Text style={styles.PanelText}>BUY MORE</Text>
@@ -220,20 +236,22 @@ const Home = () => {
                 <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-around',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                   }}>
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      fontSize: 18,
+                      fontSize: 16,
+                      marginLeft: 10
                     }}>
                     {data.balances[2].name}
                   </Text>
 
-                  <Text>{data.balances[2].initialAmount} mins calls</Text>
+                  <Text style={{fontSize: 12, marginRight: 10}}>{data.balances[2].initialAmount} mins calls</Text>
                 </View>
 
-                <Text style={{marginLeft: 23}}>
+                <Text style={{marginLeft: 10}}>
                   {data.balances[2].remainingAmount} mins left
                 </Text>
               </View>
@@ -248,9 +266,9 @@ export default Home;
 
 const styles = StyleSheet.create({
   Header: {
-    height: 200,
+    height: 220,
     width: '100%',
-    backgroundColor: 'skyblue',
+    backgroundColor: '#0E86D4',
     flexDirection: 'column',
     padding: 20,
   },
@@ -266,7 +284,7 @@ const styles = StyleSheet.create({
   SecondHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: 15,
   },
 
   ThirdHeader: {
@@ -283,7 +301,7 @@ const styles = StyleSheet.create({
 
   ReloadBtn: {
     width: 100,
-    height: 40,
+    height: 33,
     borderRadius: 20,
     backgroundColor: 'white',
     justifyContent: 'center',
@@ -298,7 +316,7 @@ const styles = StyleSheet.create({
   },
 
   MissionHeader: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     borderRadius: 15,
     backgroundColor: 'white',
     alignSelf: 'center',
@@ -307,7 +325,7 @@ const styles = StyleSheet.create({
     height: 80,
     width: '90%',
     alignItems: 'center',
-    marginTop: -20,
+    marginTop: -30,
   },
 
   MissionText1: {
@@ -322,15 +340,16 @@ const styles = StyleSheet.create({
   BuyMoreBtn: {
     backgroundColor: '#0E86D4',
     borderRadius: 15,
-    width: 130,
+    width: 110,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 40,
+    height: 30,
+    marginRight: -50,
+
   },
 
   Panel: {
     backgroundColor: '#E9EAEC',
-
     width: '90%',
     marginTop: 20,
     borderRadius: 15,
@@ -340,21 +359,23 @@ const styles = StyleSheet.create({
   PanelHeader: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 5,
     alignItems: 'center',
+    marginBottom: 10,
+    marginTop: 12
   },
 
   PanelText: {
-    fontSize: 15,
+    fontSize: 13,
     color: 'white',
+    fontWeight: 'bold'
   },
 
   PanelComponenet: {
     width: '100%',
     backgroundColor: 'white',
-    height: 100,
+    height: 80,
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 2,
     flexDirection: 'column',
     justifyContent: 'space-around',
   },
@@ -369,5 +390,13 @@ const styles = StyleSheet.create({
   MidLogo: {
     height: 50,
     width: 50,
+    marginLeft: -30
   },
+
+  WifiLogo: {
+    height: 30,
+    width: 30,
+    marginLeft: -30,
+    marginRight: 10
+  }
 });

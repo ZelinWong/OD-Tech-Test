@@ -24,25 +24,25 @@ function BottomTabs() {
         }}
         />
       <Tab.Screen name="Activity" component={Activity} options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Activity',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="note-edit-outline" color={color} size={size} />
           ),
         }}/>
       <Tab.Screen name="Rewards" component={Rewards} options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Rewards',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="star-outline" color={color} size={size} />
           ),
         }}/>
       <Tab.Screen name="Messages" component={Messages} options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Messages',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="android-messages" color={color} size={size} />
           ),
         }}/>
       <Tab.Screen name="Settings" component={Settings} options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings-outline" color={color} size={size} />
           ),

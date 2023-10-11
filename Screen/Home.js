@@ -5,28 +5,55 @@ import {
   View,
   ScrollView,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React from 'react';
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Progress from 'react-native-progress';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Home = () => {
   const [data, setData] = useState();
 
   const [loading, setLoading] = useState(true);
   const [DataRemainDays, setRemaining] = useState();
+  const [dataRemainPerc, setDataPerc] = useState();
+  const [HighSpeedRemainPerc, setHighSpeedRemainPerc] = useState();
+  const [VCRemainPerc, setVCPerc] = useState();
 
   useEffect(() => {
     const calculateRemainingDays = (effectiveDate, expiryDate) => {
       const exD = new Date(expiryDate);
       const efD = new Date(effectiveDate);
+
       const remainingDays = Math.floor((exD - efD) / (1000 * 60 * 60 * 24));
       return remainingDays;
     };
+
+    const calculateRemainingHighSpeed = (initialAmount, remainingAmount) => {
+      const initHighSpeed = initialAmount;
+      const remainingHighSpeed = remainingAmount;
+      const remainingHighSpeedAmount = remainingHighSpeed / initHighSpeed;
+      console.log(initHighSpeed, 'initial High Speed');
+      console.log(remainingHighSpeed, 'remaining High Speed');
+      console.log(remainingHighSpeedAmount, 'Remaining Amount');
+      return remainingHighSpeedAmount;
+    };
+
+    const calculateRemainingVC = (initialAmount, remainingAmount) => {
+      const initVC = initialAmount;
+      const remainingVC = remainingAmount;
+
+      const remainingVCAmount = remainingVC / initVC;
+      return remainingVCAmount;
+    };
+
     const getAccessToken = async () => {
       try {
         const token = await AsyncStorage.getItem('accessToken');
-        console.log(token);
+        console.log(dataRemainPerc);
         if (token !== null) {
           const myHeaders = new Headers();
           myHeaders.append('Authorization', `Bearer ${token}`);
@@ -52,7 +79,22 @@ const Home = () => {
                   result.data.balances[0].expiryDate,
                 );
 
+                const HighSpeedBalance = calculateRemainingHighSpeed(
+                  result.data.balances[1].initialAmount,
+                  result.data.balances[1].remainingAmount,
+                );
+
+                const VCBalance = calculateRemainingVC(
+                  result.data.balances[2].initialAmount,
+                  result.data.balances[2].remainingAmount,
+                );
+
                 setRemaining(internetBalance);
+                setDataPerc(internetBalance);
+                console.log(1234);
+                console.log(HighSpeedBalance);
+                setHighSpeedRemainPerc(HighSpeedBalance);
+                setVCPerc(VCBalance);
                 setData(result.data);
                 setLoading(false);
               }
@@ -72,21 +114,30 @@ const Home = () => {
     );
   } else
     return (
-      <ScrollView>
+      <ScrollView style={{backgroundColor: 'white'}}>
         <View style={styles.Header}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
             <Text style={styles.HeaderText}>Good Morning !</Text>
 
             <View>
               <TouchableOpacity style={styles.HeaderText}>
-                <Image
-                  style={styles.tinyLogo}
-                  source={{
-                    uri: 'https://cdn-icons-png.flaticon.com/512/0/191.png',
-                  }}></Image>
+                <MaterialCommunityIcons
+                  name="cellphone"
+                  size={25}
+                  color={'white'}
+                  marginBottom={-10}
+                  marginRight={5}
+                />
                 <Text style={{color: 'white', fontSize: 18, marginTop: 10}}>
-                  012345678
+                  0123456789
                 </Text>
+                <MaterialCommunityIcons
+                  name="chevron-down"
+                  size={25}
+                  color={'white'}
+                  marginBottom={-10}
+                  marginLeft={5}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -97,7 +148,7 @@ const Home = () => {
               <Text style={styles.WalletAmount}>RM {data.credit.amount}</Text>
             </View>
 
-            <TouchableOpacity style={styles.ReloadBtn}>
+            <TouchableOpacity style={styles.ReloadBtn} activeOpacity={0.8}>
               <Text style={styles.ReloadText}>RELOAD</Text>
             </TouchableOpacity>
           </View>
@@ -116,27 +167,41 @@ const Home = () => {
             </Text>
 
             <TouchableOpacity style={{marginLeft: 5, marginRight: 5}}>
-              <Text style={{color: 'white'}}>See rewards </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{color: 'white'}}>See rewards </Text>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={25}
+                  color={'white'}
+                  marginTop={-2}
+                />
+              </View>
             </TouchableOpacity>
           </View>
         </View>
 
-        <View>
+        <View style={{backgroundColor: 'white'}}>
           <View style={{alignItems: 'center'}}>
-            <TouchableOpacity style={{flexDirection: 'row'}}>
+            <TouchableWithoutFeedback style={{flexDirection: 'row'}}>
               <View style={styles.MissionHeader}>
                 <Image
                   style={styles.MidLogo}
                   source={require('C:/Users/User/AwesomeProject/Assets/Mountain.png')}></Image>
-                <View style={{flexDirection: 'column', marginLeft: 15}}>
+                <View style={{flexDirection: 'column'}}>
                   <Text style={styles.MissionText1}>2 missions completed</Text>
 
                   <Text style={styles.MissionText2}>
                     Complete more to get rewarded
                   </Text>
                 </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={25}
+                  color={'orange'}
+                  
+                />
               </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
           </View>
         </View>
 
@@ -144,9 +209,7 @@ const Home = () => {
           <View style={styles.Panel}>
             <View style={styles.PanelHeader}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image
-                  style={styles.WifiLogo}
-                  source={require('C:/Users/User/AwesomeProject/Assets/Globe.png')}></Image>
+              <Ionicons name="globe-outline" color={'#0E86D4'} size={33} marginLeft={-30} marginRight={10}/>
                 <Text
                   style={{
                     fontWeight: 'bold',
@@ -155,53 +218,62 @@ const Home = () => {
                   Internet
                 </Text>
               </View>
-              <TouchableOpacity style={styles.BuyMoreBtn}>
+              <TouchableOpacity style={styles.BuyMoreBtn} activeOpacity={0.8}>
                 <View>
                   <Text style={styles.PanelText}>BUY MORE</Text>
                 </View>
               </TouchableOpacity>
             </View>
             <View>
-              <View style={styles.PanelComponenet}>
+              <View style={styles.PanelComponenet1}>
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}>
                   <Text
                     style={{
                       fontWeight: 'bold',
                       fontSize: 16,
-                      marginLeft: 10
+                      marginLeft: 10,
                     }}>
                     {data.balances[0].name}
                   </Text>
 
-                  <Text style={{fontSize: 12, marginRight: 10}}>{data.balances[0].description}</Text>
+                  <Text style={{fontSize: 12, marginRight: 10}}>
+                    {data.balances[0].description}
+                  </Text>
+                </View>
+                <View style={{alignSelf: 'center'}}>
+                  <Progress.Bar progress={dataRemainPerc} width={330} />
                 </View>
                 <Text style={{marginLeft: 10}}>{DataRemainDays} days left</Text>
               </View>
 
-              <View style={styles.PanelComponenet}>
+              <View style={styles.PanelComponenet2}>
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}>
                   <Text
                     style={{
                       fontWeight: 'bold',
                       fontSize: 16,
-                      marginLeft: 10
+                      marginLeft: 10,
                     }}>
                     {data.balances[1].name}
                   </Text>
 
-                  <Text style={{fontSize: 12, marginRight: 10}}>{data.balances[1].description}</Text>
+                  <Text style={{fontSize: 12, marginRight: 10}}>
+                    {data.balances[1].description}
+                  </Text>
                 </View>
-
+                <View style={{alignSelf: 'center'}}>
+                  <Progress.Bar progress={HighSpeedRemainPerc} width={330} />
+                </View>
                 <Text style={{marginLeft: 10, color: 'red'}}>
                   {data.balances[1].remainingAmount} MB Left
                 </Text>
@@ -214,9 +286,7 @@ const Home = () => {
           <View style={styles.Panel}>
             <View style={styles.PanelHeader}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image
-                  style={styles.WifiLogo}
-                  source={require('C:/Users/User/AwesomeProject/Assets/Globe.png')}></Image>
+              <Ionicons name="globe-outline" color={'#0E86D4'} size={33} marginLeft={-30} marginRight={10}/>
                 <Text
                   style={{
                     fontWeight: 'bold',
@@ -225,32 +295,36 @@ const Home = () => {
                   Voice
                 </Text>
               </View>
-              <TouchableOpacity style={styles.BuyMoreBtn}>
+              <TouchableOpacity style={styles.BuyMoreBtn} activeOpacity={0.8}>
                 <View>
                   <Text style={styles.PanelText}>BUY MORE</Text>
                 </View>
               </TouchableOpacity>
             </View>
             <View>
-              <View style={styles.PanelComponenet}>
+              <View style={styles.PanelComponenet2}>
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}>
                   <Text
                     style={{
                       fontWeight: 'bold',
                       fontSize: 16,
-                      marginLeft: 10
+                      marginLeft: 10,
                     }}>
                     {data.balances[2].name}
                   </Text>
 
-                  <Text style={{fontSize: 12, marginRight: 10}}>{data.balances[2].initialAmount} mins calls</Text>
+                  <Text style={{fontSize: 12, marginRight: 10}}>
+                    {data.balances[2].initialAmount} mins calls
+                  </Text>
                 </View>
-
+                <View style={{alignSelf: 'center'}}>
+                  <Progress.Bar progress={VCRemainPerc} width={330} />
+                </View>
                 <Text style={{marginLeft: 10}}>
                   {data.balances[2].remainingAmount} mins left
                 </Text>
@@ -285,6 +359,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 15,
+    alignItems: 'center'
   },
 
   ThirdHeader: {
@@ -321,11 +396,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignSelf: 'center',
 
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     height: 80,
     width: '90%',
     alignItems: 'center',
     marginTop: -30,
+    elevation: 4,
+    borderColor: '#E9EAEC',
+    borderWidth: 2,
   },
 
   MissionText1: {
@@ -345,7 +423,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 30,
     marginRight: -50,
-
   },
 
   Panel: {
@@ -354,6 +431,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 15,
     alignSelf: 'center',
+    elevation: 2,
+    borderColor: '#E9EAEC',
+    borderWidth: 2,
   },
 
   PanelHeader: {
@@ -361,16 +441,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     marginBottom: 10,
-    marginTop: 12
+    marginTop: 12,
   },
 
   PanelText: {
     fontSize: 13,
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 
-  PanelComponenet: {
+  PanelComponenet1: {
     width: '100%',
     backgroundColor: 'white',
     height: 80,
@@ -378,6 +458,17 @@ const styles = StyleSheet.create({
     marginTop: 2,
     flexDirection: 'column',
     justifyContent: 'space-around',
+  },
+  PanelComponenet2: {
+    width: '100%',
+    backgroundColor: 'white',
+    height: 80,
+    alignSelf: 'center',
+    marginTop: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
 
   tinyLogo: {
@@ -390,13 +481,13 @@ const styles = StyleSheet.create({
   MidLogo: {
     height: 50,
     width: 50,
-    marginLeft: -30
+
   },
 
   WifiLogo: {
     height: 30,
     width: 30,
     marginLeft: -30,
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 });
